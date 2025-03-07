@@ -1,3 +1,4 @@
+#endpoint-fit.ipynb calls this
 import numpy as np
 from scipy.integrate import odeint
 from scipy.optimize import curve_fit
@@ -6,18 +7,21 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 import pandas as pd
 
-#t = np.linspace(0,34800, num=6960)
+#time
 t=np.linspace(0,61200,num=12241)
+
+#import filled out experimental data
 rawdata = np.transpose(np.delete(np.genfromtxt('cpr1longdata.csv',delimiter=','),0,0))
 newdata = list(rawdata.flatten())
-#new = newdata[0:13920:240]
+#pull only experimental timepoints 
 new = newdata[0:24480:240]
+#import light pattern
 lightdata = np.transpose(np.delete(np.genfromtxt('longlight.csv', delimiter=','),0,0))
 
 def sqres(ptuple):
     return np.sum((np.asarray(new)-func(t,*ptuple))**2)
-
-#def func(t,Kd,n,d2,k2,k3):
+    
+#example for FBLC model fitting. To fit a different model, change parameters to be fit.
 def func(t,d2,k2,k3,k7):
     inivalues = [1,0,0,0,0,0,0]
     arrayvalues = np.asarray([])
@@ -29,16 +33,13 @@ def func(t,d2,k2,k3,k7):
                 tindex = 12239
             return lightdata[i][int(tindex)]
   
-        #def odes(z,t,Kd,n,d2,k2,k3):
         def odes(z,t,d2,k2,k3,k7):
             Pu,Pb,Pa,mRNA,mCherry1,mCherry2,mCherry3 = z
             d1 = 0.019905
             k1 = 0.08299
             Kd = 90.41
             n = 0.964487
-            #d2= 486.67 
-            #k2= 6.597 
-            #k3= 0.0539 
+           
 
 
             d3 = 0.000077
@@ -69,11 +70,10 @@ def func(t,d2,k2,k3,k7):
             return [dPudt,dPbdt,dPadt,dmRNAdt,dmCherry1dt,dmCherry2dt,dmCherry3dt]  
 
 
-        #solver = odeint(odes,inivalues,t,args = (Kd,n,d2,k2,k3),hmax=1)
         solver = odeint(odes,inivalues,t,args = (d2,k2,k3,k7),hmax=0.1)
 
         mCherryout = solver[:,6]
-        #mCherry = mCherryout[0:13920:240]
+        #export only values at experimental timepoints
         mCherry = mCherryout[0:12240:240]
         arrayvalues = np.hstack((arrayvalues,mCherry))  
     return list(arrayvalues)
