@@ -11,5 +11,5 @@ Experimental data code: Contains all Matlab scripts used to extract fluoresence 
 
 Modeling data: Contains all excel spreadsheets or csvs used to run each model, categorized by model structure. It also contains all model outputs, and for models included in main figures 4 and 5 it contains time course plots, residual plots, and local and global sensitivity data and results. 
 
-Modeling code: Contains all Python and Jupyter Notebook scripts used to run models and create plots. endpoint-fit.ipynb and endpoint_maker.py were used to run all models. 
+Modeling code: Contains all Python and Jupyter Notebook scripts used to run models and create plots. endpoint-fit.ipynb and endpoint_maker.py were used to run all models. CR plots.ipynb was used to generate plots for Figure 4 B and Figure 5 B. Endpointfit - plot only-NEW-bothconditions.ipynb was used to calculate the adj R2, MSE, AIC, and BIC for all models. Endpoints scatter plots.ipynb was used to generate plots for Figure 4 C. Parameter heatmap.ipynb was used to generate plots for Figure 4 D and Figure 5 D. LHS.ipynb was used to generate Latin Hypercube Sampled parameter sets for local and global sensitivity analysis. Local and Global sensitivity analysis.ipynb was used to complete the local and global sensitivity analyses and to generate plots for Figure 5 E. 
 
